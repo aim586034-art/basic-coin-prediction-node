@@ -23,6 +23,7 @@ def generate_inference(token):
 
     try:
         inference = get_inference(token.upper(), TIMEFRAME, REGION, DATA_PROVIDER)
+        # inference is the predicted log return value
         return Response(str(inference), status=200)
     except Exception as e:
         return Response(json.dumps({"error": str(e)}), status=500, mimetype='application/json')
