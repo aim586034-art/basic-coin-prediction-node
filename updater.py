@@ -8,7 +8,11 @@ from urllib3.util import Retry
 from concurrent.futures import ThreadPoolExecutor
 import pandas as pd
 import json
+import logging
 
+# Setup logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 # Define the retry strategy
 retry_strategy = Retry(
@@ -96,8 +100,7 @@ def download_binance_current_day_data(pair, region):
     columns = ['start_time','open','high','low','close','volume','end_time','volume_usd','n_trades','taker_volume','taker_volume_usd','ignore']
     
     df = pd.DataFrame(json.loads(resp),columns=columns)
-    df['date'] = [pd.to_datetime(x+1,unit='ms') for x in df['end_time']]
-    df['date'] = df['date'].apply(pd.to_datetime)
+    df['date'] = [pd.to_datetime(x,unit='ms').round('s') for x in df['end_time']]
     df[["volume", "taker_volume", "open", "high", "low", "close"]] = df[["volume", "taker_volume", "open", "high", "low", "close"]].apply(pd.to_numeric)
 
     return df.sort_index()
@@ -168,8 +171,7 @@ def download_coingecko_current_day_data(token, CG_API_KEY):
     columns = ['timestamp','open','high','low','close']
     
     df = pd.DataFrame(json.loads(resp), columns=columns)
-    df['date'] = [pd.to_datetime(x,unit='ms') for x in df['timestamp']]
-    df['date'] = df['date'].apply(pd.to_datetime)
+    df['date'] = [pd.to_datetime(x,unit='ms').round('s') for x in df['timestamp']]
     df[["open", "high", "low", "close"]] = df[["open", "high", "low", "close"]].apply(pd.to_numeric)
 
     return df.sort_index()

@@ -5,10 +5,16 @@ This repository provides an example [Allora network](https://docs.allora.network
 ## Components
 
 - **Worker**: The node that publishes inferences to the Allora chain.
-- **Inference**: A container that conducts inferences, maintains the model state, and responds to internal inference requests via a Flask application. This node operates with a basic linear regression model for price predictions.
+- **Inference**: A container that conducts inferences, maintains the model state, and responds to internal inference requests via a Flask application. This node operates with a basic linear regression model that predicts log returns rather than raw prices, providing more stable predictions and better handling of price volatility.
 - **Updater**: A cron-like container designed to update the inference node's data by daily fetching the latest market information from the data provider, ensuring the model stays current with new market trends.
 
 Check the `docker-compose.yml` file for the detailed setup of each component.
+
+## Model Approach
+
+This prediction node uses **log returns** as the target variable instead of raw price predictions. Log returns offer several advantages such as normalized price movements, captures relative price changes better than absolute values etc
+
+The model predicts the log return for the next time period, which represents the relative price change: `log(price_t+1 / price_t)`.
 
 ## Docker-Compose Setup
 
@@ -98,7 +104,7 @@ This setup allows you to develop your model without the need to bring up the off
     ```
     Expected response:
     ```json
-    {"value":"2564.021586281073"}
+    {"value":"0.00472"}
     ```
 
 3. Update the node's internal state (download pricing data, train, and update the model):
