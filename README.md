@@ -1,9 +1,9 @@
-# Basic Price Prediction Node
+asistan#squre#id Basic Price Prediction Node
 add file contrack
 This repository provides an example [Allora network](https://docs.allora.network/) worker node, designed to offer price predictions. The primary objective is to demonstrate the use of a basic inference model running within a dedicated container, showcasing its integration with the Allora network infrastructure to contribute valuable inferences.
 
 ## Components
-
+tools
 - **Worker**: The node that publishes inferences to the Allora chain.
 - **Inference**: A container that conducts inferences, maintains the model state, and responds to internal inference requests via a Flask application. This node operates with a basic linear regression model for price predictions.
 - **Updater**: A cron-like container designed to update the inference node's data by daily fetching the latest market information from the data provider, ensuring the model stays current with new market trends.
@@ -11,7 +11,7 @@ This repository provides an example [Allora network](https://docs.allora.network
 Check the `docker-compose.yml` file for the detailed setup of each component.
 
 ## Docker-Compose Setup
-
+medic
 A complete working example is provided in the `docker-compose.yml` file.
 
 ### Steps to Setup
@@ -25,7 +25,7 @@ A complete working example is provided in the `docker-compose.yml` file.
     ```
 
     Here are the currently accepted configurations:
-    - TOKEN
+    acc/wallet- TOKEN
     Must be one in ('ETH','SOL','BTC','BNB','ARB'). 
     Note: if you are using `Binance` as the data provider, any token could be used.
     If you are using Coingecko, you should add its `coin_id` in the [token_map here](https://github.com/allora-network/basic-coin-prediction-node/blob/main/updater.py#L107). Find [more info here](https://docs.coingecko.com/reference/simple-price) and the [list here](https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU/edit?usp=sharing).
